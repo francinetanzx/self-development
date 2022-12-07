@@ -6,26 +6,18 @@
 - Always secure root account with MFA 
 - Certain tasks still require root credentials (for e.g., activating IAM access to the billing and cost management console) - [Click here for more information](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)
 
-<br />
-
 ## AWS IAM Service
 - Global service for centrally managing access to AWS resources 
 - AWS resources are accessed via their respective APIs 
-
-<br />
 
 ## Principals
 - Entity that can request an action or operation on an AWS resource 
 - IAM Users, IAM Roles, AWS Service, Identity Provider (IdP) or Federated User (external identities that are not managed directly by AWS IAM)
 
-<br />
-
 ## IAM User
 - Has no permissions by default 
 - Has their own credentials 
 - Always good practice to enable MFA and enforce strong password policies 
-
-<br />
 
 ## Ways to Access AWS Services 
 1. AWS Management Console Access (GUI): Create a password for the user 
@@ -33,15 +25,11 @@
     - AWS provides SDK for Java, Python and .NET 
     - To set up AWS CL, use the `aws configure` command with the AWS Access Key, AWS Secret Access Key, Default Region Name and Default Output format (json, yaml, yaml-stream, text and table)
 
-<br />
-
 ## IAM User Group
 - Collection of IAM Users 
 - Easier to manage permissions 
 - Cannot nest groups 
 - IAM Users can belong to multiple groups 
-
-<br />
 
 ## IAM Role
 - Temporary AWS Credentials for Principals
@@ -58,8 +46,6 @@
     - Access for AWS Services 
     - Access to Federated Identities 
 
-<br />
-
 ## Security Policies
 - Attached to an identity or resource and evaluated when a request is made 
 - Types of Policies 
@@ -71,8 +57,6 @@
     2. Resource-based Policies: Inline policies to resources (e.g., S3 Bucket Polcies and IAM Role Trust Policies)
     3. AWS Organization Service Control Policies (SCPs): Maximum permissions for account members of an organization or organization unit (OU)
     4. IAM Permission Boundaries: Set maximum permissions that an IAM entity (user or role) can receive 
-
-<br />
 
 ## Identity-based Policy Example
 
@@ -115,8 +99,6 @@ Precedence of Policy Statements:
 2. Explicit allow 
 3. Implicit deny
 
-<br />
-
 ## Resource-based Policy Example
 
 ```json
@@ -138,8 +120,6 @@ Precedence of Policy Statements:
 **Note: Must list the principal account (user, role, federated user) and resource is optional*
 
 **Practice defense in-depth by using both identity and resource based policies**
-
-<br />
 
 ## Permission Boundaries 
 An entity's permission boundary allows it to perform only the actions allowed by both its identity-based policies and its permission boundaries 

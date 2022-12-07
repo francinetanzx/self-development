@@ -7,7 +7,7 @@
         - Global Unicast Address (GUA): Unique IPv6 address assigned to a host interface
 
 ## CIDR
-- IP Address range for a network or a subnet 
+- IP address range for a network or a subnet 
 - VPC can have up to 5 CIDR blocks and their addresses range cannot overlap
 - Subnet mast defines which portion of the IP address is dedicated to network identification and which can be used for host IP address
 - Count the bits left after you minus from 32 and the number of available IP addresses is 2^that_num (e.g., /28 = 16 addresses)
@@ -31,7 +31,7 @@
 ## Public Subnets
 - IGW for communication between resources within VPC and the internet 
 - Route table with a route to the IGW for 0.0.0.0/0 destination 
-- Addresses accessible via the Internet (Public IP Addresses)
+- Addresses accessible via the Internet (Public IP addresses)
 
 ## Internet Gateways (IGW)
 - Poses no availability risks and bandwidth constraints 
@@ -42,3 +42,28 @@
 
 ## Route Table (RT)
 - Contains a set of rules (routes) that the VPC uses to determine where to direct network traffic 
+- Destination: IP address (e.g., 10.0.0.0/16 or 0.0.0.0/0)
+- Target: Local or IGW
+- VPC comes with a default main route table with a single rule to allow communication for all resources within the VPC (10.0.0.0/16 -> local) and this cannot be modified 
+- Each subnet has to be associated to **only one RT**, if not specified, it will take the VPC's main RT 
+- Reusable across various subnets 
+- Can be associated with a subnet, IGW or Virtual Private Gateway (VPG) 
+
+## Private Subnets
+- Allow indirect access to the internet via Web tier resources = Traffic remains within the VPC
+- Private IP addresses allocated to for e.g., EC2 will never be re-assigned 
+
+## Default VPC 
+- Default VPC will be within the /16 subnet mask 
+- Two public subnets in each AZ
+- IGW
+- Main route table includes a route to the IGW that is used by the public subnets 
+
+## Elastic IP Address 
+- Static IPv4 public address that can be associated with any instance or network interface 
+- Can be reassigned to another instance or network interface in the same or **different** VPC
+- Accessed through the IGW (So... if there is a VPN connection between the VPC and another network, the Elastic IP address cannot be reached because the VPN traffic travels through the VPG)
+- Limited to 5 Elastic IP address per AWS Account per region (Best to use NAT instead and maintain Elastic IP addresses for dynamic mapping in case of instance failure)
+
+## Elastic Network Interface
+- Static IPv4 public address that can be associated with any instance or network interface 
