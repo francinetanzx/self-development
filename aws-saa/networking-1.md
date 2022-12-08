@@ -66,4 +66,32 @@
 - Limited to 5 Elastic IP address per AWS Account per region (Best to use NAT instead and maintain Elastic IP addresses for dynamic mapping in case of instance failure)
 
 ## Elastic Network Interface
-- Static IPv4 public address that can be associated with any instance or network interface 
+- Virtual network card
+- Transferrable to another instance but still maintains the public and private IP address and MAC address (network traffic will likewise be redirected) 
+    - **NOTE: Can transfer across subnets but must be within same AZ**
+- Each instance in a VPC has a default network interface (cannot be detached) and more network interfaces can be attached
+
+## Network Address Translation with NAT Gateways
+- NAT maps one IP address to another
+- Provide a target in the RT for internet-routable traffic 
+- Used to allow private instances initiate traffic to the internet or other AWS services + Prevent private instances from receiving inbound traffic from the internet
+- NAT can be placed in both private and public subnets and if more control is required, they can also be installed in an EC2 instance to create a NAT instance
+
+## Connecting Private Subnets to the Internet 
+- Route private subnet's traffic to NAT gateway in the public subnet
+- Route public subnet's traffic to the IGW 
+
+## Network Access Control List (ACL)
+- Subnet-level
+- Default VPC's NACL allows all inbound and outbound traffic but custom NACLs denies all inbound and outbound traffic 
+- Stateless and requires explicit rules for incoming and outgoing traffic 
+- Evaluates the rules starting with the lowest numbered rule (priority)
+- Rule that has an asterick for its number is the rule that denies any packet if it does not match any of the numbered rules (* ALL Traffic ALL ALL 0.0.0.0/0 DENY)
+- Components: Rule number, type, protocol, port range, source (for inbound), destination (for outbound), allow or deny
+
+## Security Group 
+- Network interface-level 
+- Only support allow rules
+- Default group allows only inbound communication from other group members of the same group and outbound communication to any destination 
+- Restrict by IP protocol, service port, and by source or destination IP address (individual IP address or CIDR block)
+- Stateful so even if for e.g., outgoing traffic is denied, as long as incoming traffic allows, the (synchronous) outgoing traffic will be seen as an established connection and traffic is allowed to flow through = Some traffic flows are not tracked 
